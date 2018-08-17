@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngrx-auth-store": [
+        "dist/ngrx-auth-store"
+      ],
+      "ngrx-auth-store/*": [
+        "dist/ngrx-auth-store/*"
+      ]
+    }
   }
 }

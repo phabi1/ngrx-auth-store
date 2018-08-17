@@ -27,6 +27,9 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/styles.scss"
             ],
             "scripts": []
@@ -76,6 +79,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/styles.scss"
             ],
             "scripts": [],
@@ -125,7 +131,50 @@
           }
         }
       }
+    },
+    "ngrx-auth-store": {
+      "root": "projects/ngrx-auth-store",
+      "sourceRoot": "projects/ngrx-auth-store/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngrx-auth-store/tsconfig.lib.json",
+            "project": "projects/ngrx-auth-store/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngrx-auth-store/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngrx-auth-store/src/test.ts",
+            "tsConfig": "projects/ngrx-auth-store/tsconfig.spec.json",
+            "karmaConfig": "projects/ngrx-auth-store/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngrx-auth-store/tsconfig.lib.json",
+              "projects/ngrx-auth-store/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "ngrx-auth-store-app"
+  "defaultProject": "ngrx-auth-store-app",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
