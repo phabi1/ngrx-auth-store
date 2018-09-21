@@ -1,12 +1,17 @@
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, first, switchMap } from 'rxjs/operators';
+import { filter, first, switchMap, map } from 'rxjs/operators';
 import { Authenticate } from '../actions/auth.actions';
-import { getAuthenticated, getAuthenticating, getHasIdentity } from '../selectors/auth.selectors';
+import { AuthStoreConfig } from '../interfaces/config';
+import { getAuthenticated, getAuthenticating, } from '../selectors/auth.selectors';
+import { State } from '../reducers/auth.reducer';
 
 export abstract class LoggedGuardBase {
 
-  constructor(protected store: Store<any>) { }
+  constructor(
+    protected authConfig: AuthStoreConfig,
+    protected store: Store<any>
+  ) { }
 
   protected isLogged(): Observable<boolean> {
     return this._isAuthenticated().pipe(
@@ -15,11 +20,15 @@ export abstract class LoggedGuardBase {
   }
 
   private _isAuthenticated(): Observable<boolean> {
-    return this.store.select(getAuthenticated).pipe(
+    return this.store.pipe(
+      select<State>(this.authConfig.stateKey),
+      map((state) => state.authenticated),
       filter((authenticated) => {
         if (!authenticated) {
-          this.store.select(getAuthenticating)
+          this.store
             .pipe(
+              select<State>(this.authConfig.stateKey),
+              map(state => state.authenticating),
               first(),
             )
             .subscribe((authenticating) => {
@@ -35,7 +44,14 @@ export abstract class LoggedGuardBase {
   }
 
   private _hasIdentity(): Observable<boolean> {
-    return this.store.select(getHasIdentity).pipe(
+    return this.store.pipe(
+      select<State>(this.authConfig.stateKey),
+      map((state) => {
+        if (state.identity && !state.identity.uid) {
+          return true;
+        }
+        return false;
+      }),
       first()
     );
   }

@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Redirect } from '../actions/auth.actions';
+import { AuthStoreConfig } from '../interfaces/config';
+import { AUTH_CONFIG } from '../tokens';
 import { LoggedGuardBase } from './logged.guard';
 
 @Injectable({
@@ -12,13 +14,14 @@ import { LoggedGuardBase } from './logged.guard';
 export class NotLoggedGuard extends LoggedGuardBase implements CanActivate {
 
   constructor(
+    @Inject(AUTH_CONFIG) authConfig: AuthStoreConfig,
     store: Store<any>) {
-    super(store);
+    super(authConfig, store);
   }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+    return this.check(state);
   }
 
   protected check(state: RouterStateSnapshot) {

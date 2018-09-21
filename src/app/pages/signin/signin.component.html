@@ -1,6 +1,21 @@
-<form (ngSubmit)="signin()">
-  <mat-form-field>
-    <input matInput placeholder="Email" value="value">
-  </mat-form-field>
-  <button mat-raised-button>Sign In</button>
-</form>
+<div id="signin">
+  <div id="signin-wrapper">
+    <mat-card>
+      <form fxLayout="column" fxLayoutAlign="start start" [formGroup]="signinForm" (ngSubmit)="signin()">
+        <mat-form-field>
+          <input matInput formControlName="email" placeholder="Email" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="password" placeholder="Password" required>
+        </mat-form-field>
+        <ng-container *ngIf="processing$ | async; else processingTemplate">
+          <button mat-raised-button [disabled]="disable$ | async">Sign In</button>
+        </ng-container>
+        <ng-template #processingTemplate>
+          <mat-spinner mode="indeterminate" [strokeWidth]="2" [diameter]="24">
+          </mat-spinner>
+        </ng-template>
+      </form>
+    </mat-card>
+  </div>
+</div>

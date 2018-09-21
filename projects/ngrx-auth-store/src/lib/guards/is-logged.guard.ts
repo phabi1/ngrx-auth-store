@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, CanActivateChild } from '@angular/router';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SignRedirect } from '../actions/auth.actions';
 import { RedirectModes } from '../enums/redirect-modes.enum';
+import { AuthStoreConfig } from '../interfaces/config';
+import { AUTH_CONFIG } from '../tokens';
 import { LoggedGuardBase } from './logged.guard';
 
 @Injectable({
@@ -13,8 +15,9 @@ import { LoggedGuardBase } from './logged.guard';
 export class IsLoggedGuard extends LoggedGuardBase implements CanActivate, CanActivateChild {
 
   constructor(
+    @Inject(AUTH_CONFIG) authConfig: AuthStoreConfig,
     store: Store<any>) {
-    super(store);
+    super(authConfig, store);
   }
 
   canActivate(

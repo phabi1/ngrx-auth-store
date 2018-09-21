@@ -32,6 +32,9 @@ export function reducer(state = initialState, action: AuthActions): State {
       };
     case AuthActionTypes.SignRedirect:
       return { ...state, redirectUrl: action.payload.redirectUrl };
+
+    case AuthActionTypes.Redirected:
+      return { ...state, redirectUrl: null };
     default:
       return state;
   }

@@ -2,6 +2,10 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ngrx-auth-store",
   "lib": {
+    "@ngrx": "@ngrx",
+    "@ngrx/store": "@ngrx/store",
+    "@ngrx/store-devtools": "@ngrx/store-devtools",
+    "@ngrx/effects": "@ngrx/effects",
     "entryFile": "src/public_api.ts"
   }
 }

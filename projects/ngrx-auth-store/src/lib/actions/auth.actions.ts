@@ -1,13 +1,13 @@
 import { Action } from '@ngrx/store';
-import { identity } from 'rxjs';
-import { Identity } from '../interfaces/identity';
 import { RedirectModes } from '../enums/redirect-modes.enum';
+import { Identity } from '../interfaces/identity';
 
 export enum AuthActionTypes {
   Authenticate = '[Auth] Authenticate',
   Authenticated = '[Auth] Authenticated',
   SignRedirect = '[Auth] Sign Redirect',
-  Redirect = '[Auth] Redirect'
+  Redirect = '[Auth] Redirect',
+  Redirected = '[Auth] Redirected'
 }
 
 export class Authenticate implements Action {
@@ -25,9 +25,13 @@ export class SignRedirect implements Action {
 export class Redirect implements Action {
   readonly type = AuthActionTypes.Redirect;
 }
+export class Redirected implements Action {
+  readonly type = AuthActionTypes.Redirected;
+}
 
 export type AuthActions
   = Authenticate
   | Authenticated
   | SignRedirect
-  | Redirect;
+  | Redirect
+  | Redirected;

@@ -3,7 +3,9 @@ import { AuthenticationResult, AuthenticationService as IAuthenticationService, 
 import { Observable, of, empty } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthenticationService implements IAuthenticationService {
 
   private TOKEN_RESOURCE_NAME = 'token';
@@ -13,6 +15,7 @@ export class AuthenticationService implements IAuthenticationService {
   constructor() { }
 
   authenticate(): Observable<AuthenticationResult> {
+    console.log('authenticate');
     return this.loadCredentials().pipe(
       map((credentials) => ({
         valid: true,

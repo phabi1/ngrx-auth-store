@@ -1,16 +1,23 @@
-<ul>
-  <li>
-    <a routerLink="/">HOME</a>
-  </li>
-  <li>
-    <a routerLink="/private">PRIVATE</a>
-  </li>
-  <li>
-    <a routerLink="/login">SIGNIN</a>
-  </li>
-  <li>
-    <a routerLink="/logout">SIGNOUT</a>
-  </li>
-</ul>
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <div fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+    <span>AUTH Store Application</span>
+    <span>
+      <ul fxLayout="row" class="nav">
+        <li>
+          <a mat-button routerLink="/">HOME</a>
+        </li>
+        <li>
+          <a mat-button routerLink="/private">PRIVATE</a>
+        </li>
+        <li *authHasIdentity="true">
+          <a mat-button routerLink="/login">SIGNIN</a>
+        </li>
+        <li *authHasIdentity>
+          <a mat-button routerLink="/logout">SIGNOUT</a>
+        </li>
+      </ul>
+    </span>
+  </div>
+</mat-toolbar>
 
+<router-outlet></router-outlet>
