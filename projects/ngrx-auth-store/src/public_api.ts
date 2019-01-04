@@ -2,10 +2,11 @@
  * Public API Surface of ngrx-auth-store
  */
 
-export { Authenticate, Authenticated, Redirect, AuthActionTypes } from './lib/actions/auth.actions';
+export * from './lib/actions/auth.actions';
 export { AuthStoreModule } from './lib/auth.module';
 export { IsLoggedGuard } from './lib/guards/is-logged.guard';
 export { NotLoggedGuard } from './lib/guards/not-logged.guard';
+export { AuthEffects } from './lib/effects/auth.effects';
 export { AuthenticationResult, AuthenticationService } from './lib/interfaces/authentication-service';
 export { AuthStoreConfig } from './lib/interfaces/config';
 export { Identity } from './lib/interfaces/identity';

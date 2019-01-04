@@ -7,7 +7,9 @@ export enum AuthActionTypes {
   Authenticated = '[Auth] Authenticated',
   SignRedirect = '[Auth] Sign Redirect',
   Redirect = '[Auth] Redirect',
-  Redirected = '[Auth] Redirected'
+  Redirected = '[Auth] Redirected',
+  Refresh = '[Auth] Refresh',
+  Refreshed = '[Auth] Refreshed'
 }
 
 export class Authenticate implements Action {
@@ -29,9 +31,18 @@ export class Redirected implements Action {
   readonly type = AuthActionTypes.Redirected;
 }
 
+export class Refresh implements Action {
+  readonly type = AuthActionTypes.Refresh;
+}
+export class Refreshed implements Action {
+  readonly type = AuthActionTypes.Refreshed;
+}
+
 export type AuthActions
   = Authenticate
   | Authenticated
   | SignRedirect
   | Redirect
-  | Redirected;
+  | Redirected
+  | Refresh
+  | Refreshed;

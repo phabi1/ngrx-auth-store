@@ -7,8 +7,9 @@ import { first, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { AuthActionTypes, Authenticated, Redirected, SignRedirect } from '../actions/auth.actions';
 import { RedirectModes } from '../enums/redirect-modes.enum';
 import { AuthenticationService } from '../interfaces/authentication-service';
+import { AuthStoreConfig } from '../interfaces/config';
 import { getRedirectUrl } from '../selectors/auth.selectors';
-import { AUTH_AUTHENTICATION_SERVICE, AUTH_SIGNIN_URL, AUTH_SIGNUP_URL } from '../tokens';
+import { AUTH_AUTHENTICATION_SERVICE, AUTH_CONFIG } from '../tokens';
 
 @Injectable()
 export class AuthEffects {
@@ -34,10 +35,10 @@ export class AuthEffects {
       let redirectUrl: string;
       switch (action.payload.mode) {
         case RedirectModes.Signin:
-          redirectUrl = this.signinUrl;
+          redirectUrl = this._authConfig.signInUrl;
           break;
         case RedirectModes.Signup:
-          redirectUrl = this.signupUrl;
+          redirectUrl = this._authConfig.signUpUrl;
           break;
         case RedirectModes.Custom:
           redirectUrl = action.payload.url;
@@ -61,8 +62,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     @Inject(AUTH_AUTHENTICATION_SERVICE) private authenticationService: AuthenticationService,
-    @Inject(AUTH_SIGNIN_URL) private signinUrl: string,
-    @Inject(AUTH_SIGNUP_URL) private signupUrl: string,
+    @Inject(AUTH_CONFIG) private _authConfig: AuthStoreConfig,
     private router: Router,
     private store: Store<any>
   ) { }

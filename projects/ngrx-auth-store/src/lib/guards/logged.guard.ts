@@ -1,9 +1,8 @@
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, first, switchMap, map } from 'rxjs/operators';
+import { filter, first, map, switchMap } from 'rxjs/operators';
 import { Authenticate } from '../actions/auth.actions';
 import { AuthStoreConfig } from '../interfaces/config';
-import { getAuthenticated, getAuthenticating, } from '../selectors/auth.selectors';
 import { State } from '../reducers/auth.reducer';
 
 export abstract class LoggedGuardBase {

@@ -23,19 +23,31 @@ export class IsLoggedGuard extends LoggedGuardBase implements CanActivate, CanAc
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.check(state);
+    return this.check(next, state);
   }
 
   canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
-    return this.check(state);
+    return this.check(next, state);
   }
 
-  protected check(state: RouterStateSnapshot): Observable<boolean> {
+  protected check(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.isLogged().pipe(
       tap((isLogged) => {
         if (!isLogged) {
+
+          // Set initial redirect mode
+          let mode: RedirectModes = RedirectModes.Signin;
+
+          // Parse route config
+          if (next.data && next.data.auth && next.data.auth.redirect) {
+
+            // Set mode
+            mode = next.data.auth.redirect;
+          }
+
+          // Dispatch redirect action
           this.store.dispatch(new SignRedirect({
-            mode: RedirectModes.Signin,
+            mode,
             redirectUrl: state.url
           }));
         }
